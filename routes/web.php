@@ -12,6 +12,7 @@
 */
 
 Route::get('/', function () {
+    
     return view('welcome');
 });
 
@@ -19,6 +20,9 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/properties', 'PropertiesController@index')->name('properties');
+Route::get('/properties/create', 'PropertiesController@create');
+Route::post('/properties', 'PropertiesController@store');
+Route::get('/properties/{property}', 'PropertiesController@show');
+Route::get('/properties/{property}/edit', 'PropertiesController@edit');
+Route::delete('/properties/{property}/delete', 'PropertiesController@destroy');
