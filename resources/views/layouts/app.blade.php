@@ -47,6 +47,10 @@
         .dropdown-item:hover {
             background-color: rgba(0, 0, 0, 0.075);
         }
+        .divider {
+            border-right: solid 5px #ae3229;
+            
+        }
 
     </style>
 
