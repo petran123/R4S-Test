@@ -39,7 +39,12 @@ class User extends Authenticatable
 
     public function properties()
     {
-        return $this->hasMany('App\Property');
+        return $this->hasMany('App\Property', 'manager_id');
+    }
+
+    public function tenants()
+    {
+        return $this->hasMany('App\Tenant', 'manager_id');
     }
     
 }

@@ -37,6 +37,16 @@
             display:inline;
         padding-right: 15px;
         }
+        table {
+            width: 100%;
+        }
+        tr.property-list:hover {
+            cursor: pointer;
+        }
+        .dropdown-item:hover {
+            background-color: rgba(0, 0, 0, 0.075);
+        }
+
     </style>
 
 </head>
@@ -76,6 +86,10 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+
+                                    <a class="dropdown-item" href="/properties">My Properties</a>
+                                    <a class="dropdown-item" href="/tenants">My Tenants</a>
+
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -94,7 +108,9 @@
         </nav>
 
         <main class="py-4">
+            <div class="container">
             @yield('content')
+            </div>
         </main>
     </div>
 </body>

@@ -8,7 +8,7 @@ class Property extends Model
 {
 
     protected $fillable = [
-        'user_id',
+        'manager_id',
         'address_line_1',
         'address_line_2',
         'town',
@@ -17,13 +17,13 @@ class Property extends Model
         'monthly_rent_in_gbp'
     ];
 
-    public function owner()
+    public function manager()
     {
-        return $this->belongsTo('App\User', 'user_id');
+        return $this->belongsTo('App\User', 'manager_id');
     }
     
     public function tenants()
     {
-        return $this->hasMany('App\Tenant');
+        return $this->hasMany('App\Tenant', 'property_id');
     }
 }

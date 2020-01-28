@@ -15,13 +15,13 @@ class CreatePropertiesTable extends Migration
     {
         Schema::create('properties', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('manager_id');
             $table->string('address_line_1');
             $table->string('address_line_2')->nullable();
             $table->string('town');
             $table->string('county');
             $table->string('postcode');
-            $table->unsignedBigInteger('monthly_rent_in_pence')->nullable();
+            $table->unsignedBigInteger('monthly_rent_in_gbp')->nullable();
             $table->timestamps();
         });
     }

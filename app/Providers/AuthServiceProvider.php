@@ -25,6 +25,8 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::define('manage-property', function ($user, $property) {
+            return $user == $property->manager;
+        });
     }
 }

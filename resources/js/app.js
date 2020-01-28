@@ -30,3 +30,7 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 const app = new Vue({
     el: '#app',
 });
+
+$('tr[data-href]').on("click", function() {
+    document.location = $(this).data('href');
+});
