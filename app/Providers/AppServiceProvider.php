@@ -26,6 +26,6 @@ class AppServiceProvider extends ServiceProvider
     {
         Validator::extend('alpha_num_spaces_dashes', function($attribute, $value) {
             return preg_match('/^[\pL\d\s]+$/u', $value);
-        });
+        }, "Only alphanumeric characters and spaces are allowed.");
     }
 }

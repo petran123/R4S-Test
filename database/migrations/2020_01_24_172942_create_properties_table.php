@@ -23,6 +23,8 @@ class CreatePropertiesTable extends Migration
             $table->string('postcode');
             $table->unsignedBigInteger('monthly_rent_in_gbp')->nullable();
             $table->timestamps();
+
+            $table->foreign('manager_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Property;
 use App\Tenant;
-use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -23,14 +22,12 @@ class PropertiesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, User $user)
+    public function index(Request $request)
     {
-        $filter = $request->input('filter') ?: 'address_line_1';
+        $sort = $request->input('sort') ?: 'address_line_1';
         $order = $request->input('order') ?: 'asc';
 
-        $properties = Property::where('manager_id', Auth::id())->orderBy($filter, $order)->get();
-        // $properties = $user->properties;
-        // orderBy($filter, $order)->get();
+        $properties = Auth::user()->properties()->orderby($sort, $order)->get();
 
         return view('properties.index', [
             'request' => $request,
@@ -56,7 +53,6 @@ class PropertiesController extends Controller
      */
     public function store(Request $request)
     {
-
         $validatedData = $this->validateData($request);
         $validatedData['manager_id'] = Auth::id();
 
@@ -131,40 +127,6 @@ class PropertiesController extends Controller
 
         abort(403);
     }
-
-    /**
-     * Remove tenant from property
-     * 
-     * @param \App\User $user
-     * @param \App\Property $property
-     * @param \App\Tenant $tenant
-     * 
-     * @return \Illuminate\Http\Response
-     */
-    public function removeTenant(Property $property, Tenant $tenant)
-    {
-        if (Gate::allows('manage-property', $property)) {
-            $tenant->property_id = null;
-            $tenant->save();
-
-            return redirect("properties/{$property->id}/edit" );
-        }
-
-        abort(403);
-    }
-
-    public function updateTenant(Request $request, Property $property, Tenant $tenant)
-    {
-        dd('doesn\'t work yet');
-        if (Gate::allows('manage-property', $property)) {
-            $tenant->share_of_rent_in_gbp = $request->validate(['share_of_rent_in_gbp' => ['required', 'numeric']]);
-            $tenant->save();
-            return redirect("properties/{$property->id}/edit" );
-        }
-
-        abort(403);
-    }
-
 
     private function validateData($request)
     {

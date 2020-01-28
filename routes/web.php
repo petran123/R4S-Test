@@ -12,16 +12,16 @@
 */
 
 Route::get('/', function () {
-    
     return view('welcome');
 });
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-Route::delete('/properties/{property}/{tenant}', 'PropertiesController@removeTenant');
-Route::post('/properties/{property}/{tenant}', 'PropertiesController@addTenant');
-Route::patch('/properties/{property}/{tenant}', 'PropertiesController@updateTenant');
-Route::resource('properties', 'PropertiesController');
 
-Route::resource('tenants', 'TenantsController');
+Route::resource('/properties', 'PropertiesController');
+
+// Route::get('/tenants', 'TenantsController@index');
+Route::get('/tenants/{property}', 'TenantsController@show');
+Route::post('/tenants/{property}', 'TenantsController@store');
+Route::patch('/tenants/{property}/{tenant}', 'TenantsController@update');
+Route::delete('/tenants/{property}/{tenant}', 'TenantsController@destroy');

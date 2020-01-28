@@ -31,6 +31,7 @@
         .r4s-button:hover {
             color: white;
             text-decoration: none;
+            background-color: #8b2820;
         }
         .property-item {border-bottom: solid 1px gainsboro;}
         .property-content {
@@ -82,13 +83,12 @@
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->forename }} <span class="caret"></span>
+                                    Hello, {{ Auth::user()->forename }} <span class="caret"></span>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
 
                                     <a class="dropdown-item" href="/properties">My Properties</a>
-                                    <a class="dropdown-item" href="/tenants">My Tenants</a>
 
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();

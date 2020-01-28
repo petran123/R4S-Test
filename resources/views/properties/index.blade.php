@@ -19,10 +19,10 @@
                         <div class="form-group">
                             <div class="form-row">
                                 <div class="col-5">
-                                    <select class="form-control" name="filter" id="filter">
+                                    <select class="form-control" name="sort" id="sort">
                                         <option value="address_line_1">Address</option>
-                                        <option value="town" {{$request->filter == "town"? "selected" : ""}}>Town</option>
-                                        <option value="postcode" {{$request->filter == "postcode"? "selected" : ""}}>Postcode</option>
+                                        <option value="town" {{$request->sort == "town"? "selected" : ""}}>Town</option>
+                                        <option value="postcode" {{$request->sort == "postcode"? "selected" : ""}}>Postcode</option>
                                     </select>
                                 </div>
                                 <div class="col-5">

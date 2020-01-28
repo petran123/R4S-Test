@@ -15,12 +15,13 @@ class CreateTenantsTable extends Migration
     {
         Schema::create('tenants', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('property_id')->nullable();
-            $table->unsignedBigInteger('manager_id')->nullable();
+            $table->unsignedBigInteger('property_id');
             $table->text('given_name');
             $table->text('family_name');
             $table->unsignedBigInteger('share_of_rent_in_gbp')->nullable();
             $table->timestamps();
+
+            $table->foreign('property_id')->references('id')->on('properties')->onDelete('cascade');
         });
     }
 

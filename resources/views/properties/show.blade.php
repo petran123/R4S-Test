@@ -24,7 +24,7 @@
                           </button>
                         </div>
                         <div class="modal-body">
-                          Are you sure? This cannot be reversed.
+                          Are you sure? This cannot be reversed, and the associated tenants will be deleted.
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-dismiss="modal">cancel</button>
@@ -80,13 +80,14 @@
                 </table>
 
                 <div class="row">
-                <h3>Tenants</h3>
-
+                    <h3>Tenants</h3>
+                    
+                    <div>
+                        <a class="btn r4s-button ml-2" href="/properties/{{$property->id}}/edit#tenants">Edit</a>
+                    </div>
+                </div>
                 @if(!$property->tenants->isEmpty())
-                <div>
-                    <a class="btn r4s-button ml-2" href="/properties/{{$property->id}}/edit#tenants">Edit</a>
-                </div>
-                </div>
+                
                 <table class="table table-hover mt-2">
                     <tr>
                         <th>Given Name</th>
@@ -100,8 +101,6 @@
                             <td class="pl-5">£{{$tenant->share_of_rent_in_gbp?: 0}}</td>
                         </tr>
                     @endforeach
-                    
-
                 </table>
                 @else
                 </div>

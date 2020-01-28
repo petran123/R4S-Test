@@ -19,7 +19,7 @@
                         {{ __('Address Line 1') }}
                     </label>
             
-                    <div class="col-md-6">
+                    <div class="col-md-6 mt-2">
                         <input id="address_line_1" type="text" class="form-control @error('address_line_1') is-invalid @enderror" 
                         name="address_line_1" value="{{ old('address_line_1')?: $property->address_line_1 }}" 
                         required autocomplete="address_line_1" autofocus>
@@ -31,11 +31,11 @@
                         @enderror
                     </div>
             
-                    <label for="address_line_2" class="col-md-4 col-form-label text-md-right">
+                    <label for="address_line_2" class="col-md-4 col-form-label text-md-right mt-2">
                         {{ __('Address Line 2') }}
                     </label>
             
-                    <div class="col-md-6">
+                    <div class="col-md-6 mt-2">
                         <input id="address_line_2" type="text" class="form-control @error('address_line_2') is-invalid @enderror" 
                         name="address_line_2" value="{{ old('address_line_2')?: $property->address_line_2 }}" autocomplete="address_line_2" autofocus>
             
@@ -46,9 +46,9 @@
                         @enderror
                     </div>
             
-                    <label for="town" class="col-md-4 col-form-label text-md-right">{{ __('Town') }}</label>
+                    <label for="town" class="col-md-4 col-form-label text-md-right mt-2">{{ __('Town') }}</label>
             
-                    <div class="col-md-6">
+                    <div class="col-md-6 mt-2">
                         <input id="town" type="text" class="form-control @error('town') is-invalid @enderror" 
                         name="town" value="{{ old('town')?: $property->town }}" required autocomplete="town" autofocus>
             
@@ -59,11 +59,11 @@
                         @enderror
                     </div>
             
-                    <label for="county" class="col-md-4 col-form-label text-md-right">
+                    <label for="county" class="col-md-4 col-form-label text-md-right mt-2">
                         {{ __('County') }}
                     </label>
             
-                    <div class="col-md-6">
+                    <div class="col-md-6 mt-2">
                         <input id="county" type="text" class="form-control @error('county') is-invalid @enderror" 
                         name="county" value="{{ old('county')?: $property->county }}" required autocomplete="county" autofocus>
             
@@ -74,11 +74,11 @@
                         @enderror
                     </div>
             
-                    <label for="postcode" class="col-md-4 col-form-label text-md-right">
+                    <label for="postcode" class="col-md-4 col-form-label text-md-right mt-2">
                         {{ __('Postcode') }}
                     </label>
             
-                    <div class="col-md-6">
+                    <div class="col-md-6 mt-2">
                         <input id="postcode" type="text" class="form-control @error('postcode') is-invalid @enderror" 
                         name="postcode" value="{{ old('postcode')?: $property->postcode }}" required autocomplete="postcode" autofocus>
             
@@ -89,9 +89,9 @@
                         @enderror
                     </div>
             
-                    <label for="monthly_rent_in_gbp" class="col-md-4 col-form-label text-md-right">{{ __('Rent(GBP)') }}</label>
+                    <label for="monthly_rent_in_gbp" class="col-md-4 col-form-label text-md-right mt-2">{{ __('Rent(£)') }}</label>
             
-                    <div class="col-md-6">
+                    <div class="col-md-6 mt-2">
                         <input id="monthly_rent_in_gbp" type="number" class="form-control @error('monthly_rent_in_gbp') is-invalid @enderror" 
                         name="monthly_rent_in_gbp" value="{{ old('monthly_rent_in_gbp')?: $property->monthly_rent_in_gbp }}"
                          autocomplete="monthly_rent_in_gbp" autofocus>
@@ -124,7 +124,7 @@
 
                 </div>
                     <div class="col-5">
-                    <form method="POST" action="/properties/{{$property->id}}/{{$tenant->id}}" class="form-group d-flex">
+                    <form method="POST" action="/tenants/{{$property->id}}/{{$tenant->id}}" class="form-group d-flex">
                         @csrf
                         @method('PATCH')
                         
@@ -136,28 +136,46 @@
                 
 
                 <div class="col-1">
-                    <form method="POST" action="/properties/{{$property->id}}/{{$tenant->id}}">
+                    <form method="POST" action="/tenants/{{$property->id}}/{{$tenant->id}}">
                         @method('DELETE')
                         @csrf
                         <button class="btn r4s-button" type="submit">Remove</button>
                     </form>
                 </div>
-                @endforeach
             </div>
-
+                @endforeach
+            
+        
             <h3 class="mt-4">Add Tenants</h3>
-            <form action="/properties/{{$property->id}}/" method="post">
+            <form action="/tenants/{{$property->id}}/" method="post">
+                @csrf
                 <div class="row">
                     <div class="col">
-                        <select class="form-control" name="add-tenant" id="add-tenant">
-                            @foreach ($unusedTenants as $unusedTenant)
-                                <option value="{{$unusedTenant->id}}">{{$unusedTenant->given_name . " " . $unusedTenant->family_name}}</option>                       
-                            @endforeach
-                        </select>
+                        <input class="form-control @error('given_name') is-invalid @enderror" type="text" name="given_name" id="new_given_name" placeholder="Given Name" required>
+
+                        @error('given_name')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                     </div>
 
                     <div class="col">
-                        <input class="form-control" type="number" name="share_of_rent_in_gbp" id="share-of-rent" placeholder="share of rent(£)" required>
+                        <input class="form-control @error('family_name') is-invalid @enderror" type="text" name="family_name" id="new_family_name" placeholder="Family Name" required>
+                        @error('family_name')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+
+                    <div class="col">
+                        <input class="form-control @error('share_of_rent_in_gbp') is-invalid @enderror" type="number" name="share_of_rent_in_gbp" id="share-of-rent" placeholder="share of rent(£)" required>
+                        @error('share_of_rent_in_gbp')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                     </div>
 
                     <div class="col">
@@ -165,12 +183,8 @@
                     </div>
                 </div>
             </form>
-
-            <a href="/tenants" class="btn r4s-button mt-5">Manage Tenant Profiles</a>
-
-            
-
         </div>
     </div>
 </div>
+
 @endsection
