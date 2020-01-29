@@ -8,8 +8,8 @@ use Faker\Generator as Faker;
 $factory->define(Property::class, function (Faker $faker) {
     return [
         'manager_id' => factory('App\User')->create(),
-        'address_line_1' => $faker->address,
-        'address_line_2' => $faker->address,
+        'address_line_1' => $faker->buildingNumber . " " . $faker->streetName,
+        'address_line_2' => $faker->secondaryAddress,
         'town' => $faker->city,
         'county' => $faker->city,
         'postcode' => $faker->postcode,
