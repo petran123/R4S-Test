@@ -12,7 +12,8 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $title = "Home | Rent4Sure";
+    return view('welcome', compact('title'));
 });
 
 Auth::routes();

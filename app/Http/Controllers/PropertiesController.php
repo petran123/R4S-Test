@@ -26,12 +26,14 @@ class PropertiesController extends Controller
      */
     public function index(Request $request)
     {
+        $title = "My Properties | Rent4Sure";
+
         $sort = $request->input('sort') ?: 'address_line_1';
         $order = $request->input('order') ?: 'asc';
 
         $properties = Auth::user()->properties()->orderby($sort, $order)->get();
 
-        return view('properties.index', compact('request', 'properties'));
+        return view('properties.index', compact('title', 'request', 'properties'));
     }
 
     /**
@@ -41,7 +43,9 @@ class PropertiesController extends Controller
      */
     public function create()
     {
-        return view('properties.create');
+        $title = "Create a Property | Rent4Sure";
+
+        return view('properties.create', compact('title'));
     }
 
     /**
@@ -68,8 +72,9 @@ class PropertiesController extends Controller
      */
     public function show(Property $property)
     {
+        $title = "{$property->address_line_1}} | Rent4Sure";
         if (Gate::allows('manage-property', $property))
-            return view('properties.show', compact('property'));
+            return view('properties.show', compact('title', 'property'));
 
         abort(403);
     }
@@ -83,9 +88,12 @@ class PropertiesController extends Controller
     public function edit(Property $property)
     {
         if (Gate::allows('manage-property', $property)) {
+
+            $title = "Edit | Rent4Sure ";
+
             $unusedTenants = Tenant::where('property_id', null)->get();
 
-            return view('properties.edit', compact('property', 'unusedTenants'));
+            return view('properties.edit', compact('title', 'property', 'unusedTenants'));
         }
 
         abort(403);
