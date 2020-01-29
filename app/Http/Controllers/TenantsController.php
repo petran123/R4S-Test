@@ -47,8 +47,10 @@ class TenantsController extends Controller
     public function update(Request $request, Property $property, Tenant $tenant)
     {
         if (Gate::allows('manage-property', $property)) {
+            $validated = $request->validate(['share_of_rent_in_gbp_edit' => ['integer', 'min:0', 'nullable']]);
+            $newRent['share_of_rent_in_gbp'] = $validated['share_of_rent_in_gbp_edit'];
             
-            $tenant->update($request->validate(['share_of_rent_in_gbp' => ['numeric', 'nullable']]));
+            $tenant->update($newRent);
             return redirect("/properties/{$property->id}/edit");
         }
 
@@ -77,7 +79,7 @@ class TenantsController extends Controller
         return $request->validate([
             'given_name' => ['alpha', 'required'],
             'family_name' => ['alpha', 'required'],
-            'share_of_rent_in_gbp' => ['numeric', 'nullable']
+            'share_of_rent_in_gbp' => ['integer', 'min:0', 'nullable']
         ]);
     }
 }

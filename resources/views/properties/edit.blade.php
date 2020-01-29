@@ -127,9 +127,9 @@
                     <form method="POST" action="/tenants/{{$property->id}}/{{$tenant->id}}" class="form-group d-flex">
                         @csrf
                         @method('PATCH')
-                        
-                            <input class="form-control" type="number" name="share_of_rent_in_gbp" id="edit_share_of_rent" value="{{$tenant->share_of_rent_in_gbp}}" placeholder="share of rent(£)">
-
+                            <input class="form-control  @error('share_of_rent_in_gbp_edit') is-invalid @enderror" type="number" name="share_of_rent_in_gbp_edit" id="share_of_rent_edit" 
+                            value="{{$tenant->share_of_rent_in_gbp?: 0}}" placeholder="share of rent(£)">
+                            
                             <button class="btn r4s-button" type="submit">Modify</button>
                     </form>
                 </div>
