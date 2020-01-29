@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreProperty;
+use App\Http\Requests\UpdateProperty;
 use App\Property;
 use App\Tenant;
 use Illuminate\Http\Request;
@@ -48,9 +50,9 @@ class PropertiesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreProperty $request)
     {
-        $validatedData = $this->validateData($request);
+        $validatedData = $request->validated();
         $validatedData['manager_id'] = Auth::id();
 
         $property = Property::create($validatedData);
@@ -96,10 +98,11 @@ class PropertiesController extends Controller
      * @param  \App\Property  $property
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Property $property)
+    public function update(UpdateProperty $request, Property $property)
     {
+        
         if (Gate::allows('manage-property', $property)) {
-            $property->update($this->validateData($request));
+            $property->update($request->validated());
             return redirect()->route('properties.show', [$property]);
         }
 
@@ -120,17 +123,5 @@ class PropertiesController extends Controller
         }
 
         abort(403);
-    }
-
-    private function validateData($request)
-    {
-        return $request->validate([
-            'address_line_1' => ['required', 'alpha_num_spaces_dashes'],
-            'address_line_2' => ['alpha_num_spaces_dashes', 'nullable'],
-            'town' => ['required', 'alpha'],
-            'county' => ['required', 'alpha'],
-            'postcode' => ['required'],
-            'monthly_rent_in_gbp' => ['numeric', 'nullable']
-        ]);
     }
 }

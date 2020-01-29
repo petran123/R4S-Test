@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreTenant;
+use App\Http\Requests\UpdateTenant;
 use App\Property;
 use App\Tenant;
 use Illuminate\Http\Request;
@@ -22,10 +24,10 @@ class TenantsController extends Controller
      * @param  \App\Property $property
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Property $property)
+    public function store(StoreTenant $request, Property $property)
     {
         if (Gate::allows('manage-property', $property)) {
-            $validatedData = $this->validateData($request);
+            $validatedData = $request->validated();
             $validatedData['property_id'] = $property->id;
 
             Tenant::create($validatedData);
@@ -44,10 +46,10 @@ class TenantsController extends Controller
      * @param  \App\Tenant  $tenant
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Property $property, Tenant $tenant)
+    public function update(UpdateTenant $request, Property $property, Tenant $tenant)
     {
         if (Gate::allows('manage-property', $property)) {
-            $validated = $request->validate(['share_of_rent_in_gbp_edit' => ['integer', 'min:0', 'nullable']]);
+            $validated = $request->validated();
             $newRent['share_of_rent_in_gbp'] = $validated['share_of_rent_in_gbp_edit'];
             
             $tenant->update($newRent);
@@ -74,12 +76,4 @@ class TenantsController extends Controller
         abort(403);
     }
 
-    private function validateData(Request $request)
-    {
-        return $request->validate([
-            'given_name' => ['alpha', 'required'],
-            'family_name' => ['alpha', 'required'],
-            'share_of_rent_in_gbp' => ['integer', 'min:0', 'nullable']
-        ]);
-    }
 }
