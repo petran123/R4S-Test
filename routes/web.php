@@ -20,7 +20,6 @@ Auth::routes();
 
 Route::resource('/properties', 'PropertiesController');
 
-// Route::get('/tenants', 'TenantsController@index');
 Route::get('/tenants/{property}', 'TenantsController@show');
 Route::post('/tenants/{property}', 'TenantsController@store');
 Route::patch('/tenants/{property}/{tenant}', 'TenantsController@update');
