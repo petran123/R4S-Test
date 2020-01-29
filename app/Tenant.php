@@ -16,6 +16,6 @@ class Tenant extends Model
 
     public function renting()
     {
-        return $this->belongsTo('App\Property');
+        return $this->belongsTo('App\Property', 'property_id');
     }
 }

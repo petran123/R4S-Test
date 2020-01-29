@@ -7,7 +7,7 @@ use Faker\Generator as Faker;
 
 $factory->define(Property::class, function (Faker $faker) {
     return [
-        'user_id' => factory('App\User')->create(),
+        'manager_id' => factory('App\User')->create(),
         'address_line_1' => $faker->address,
         'address_line_2' => $faker->address,
         'town' => $faker->city,

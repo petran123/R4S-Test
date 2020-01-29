@@ -29,10 +29,7 @@ class PropertiesController extends Controller
 
         $properties = Auth::user()->properties()->orderby($sort, $order)->get();
 
-        return view('properties.index', [
-            'request' => $request,
-            'properties' => $properties
-        ]);
+        return view('properties.index', compact('request', 'properties'));
     }
 
     /**
@@ -58,7 +55,7 @@ class PropertiesController extends Controller
 
         $property = Property::create($validatedData);
 
-        return redirect("/properties/{$property->id}");
+        return redirect()->route('properties.show', [$property]);
     }
 
     /**
@@ -70,7 +67,7 @@ class PropertiesController extends Controller
     public function show(Property $property)
     {
         if (Gate::allows('manage-property', $property))
-            return view('properties.show', ['property' => $property]);
+            return view('properties.show', compact('property'));
 
         abort(403);
     }
@@ -86,10 +83,7 @@ class PropertiesController extends Controller
         if (Gate::allows('manage-property', $property)) {
             $unusedTenants = Tenant::where('property_id', null)->get();
 
-            return view('properties.edit', [
-                'property' => $property,
-                'unusedTenants' => $unusedTenants
-                ]);
+            return view('properties.edit', compact('property', 'unusedTenants'));
         }
 
         abort(403);
@@ -106,7 +100,7 @@ class PropertiesController extends Controller
     {
         if (Gate::allows('manage-property', $property)) {
             $property->update($this->validateData($request));
-            return redirect("properties/{$property->id}");
+            return redirect()->route('properties.show', [$property]);
         }
 
         abort(403);
@@ -122,7 +116,7 @@ class PropertiesController extends Controller
     {
         if (Gate::allows('manage-property', $property)) {
             $property->delete();
-            return redirect('properties');
+            return redirect()->route('properties.index');
         }
 
         abort(403);

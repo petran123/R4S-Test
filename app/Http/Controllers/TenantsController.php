@@ -30,7 +30,7 @@ class TenantsController extends Controller
 
             Tenant::create($validatedData);
 
-            return redirect("/properties/{$property->id}");
+            return redirect()->route('properties.edit', [$property]);
         }
 
         abort(403);
@@ -51,7 +51,7 @@ class TenantsController extends Controller
             $newRent['share_of_rent_in_gbp'] = $validated['share_of_rent_in_gbp_edit'];
             
             $tenant->update($newRent);
-            return redirect("/properties/{$property->id}/edit");
+            return redirect()->route('properties.edit', [$property]);
         }
 
         abort(403);
@@ -68,7 +68,7 @@ class TenantsController extends Controller
         if (Gate::allows('manage-property', $property)) {
             $tenant->delete();
 
-            return redirect("/properties/{$property->id}/edit");
+            return redirect()->route('properties.edit', [$property]);
         }
 
         abort(403);
