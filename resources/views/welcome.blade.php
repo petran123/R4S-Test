@@ -3,7 +3,7 @@
 @section('content')
 <div class="flex-center position-ref full-height">
     
-    <h1 class="mt-5 mb-5">Welcome to Rent4Sure</h1>
+    <h1 class="mt-5 mb-5">Welcome to <i>Renting Company</i></h1>
 
     <div class="row pt-5">
         <div class="col-6 divider mt-5 pt-5">

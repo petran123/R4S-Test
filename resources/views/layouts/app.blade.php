@@ -60,7 +60,7 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    <img class="brand-logo" src="/img/logo-black-text-with-red-4.png" alt="Rent4Sure">
+                    <img class="brand-logo" src="http://via.placeholder.com/3031x654" alt="Renting Company">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
